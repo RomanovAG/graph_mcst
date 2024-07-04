@@ -1,0 +1,2 @@
+start->B1->B2->B3->B4->A3->A4->A5->A6->A7->C4->C5->B5->B6->B7->AB->ABC->stop
+start A1 A2 B1 B2 C1 C2 C3 B3 B4 A3 A4 A5 A6 A7 A8 A9 C4 C5 C6 C7 C8 B5 B6 B7 AB ABC stop 

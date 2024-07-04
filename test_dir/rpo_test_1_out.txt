@@ -1,0 +1,3 @@
+Node "A" is already exist
+Start A B D C Stop 
+Found back edge: D->B

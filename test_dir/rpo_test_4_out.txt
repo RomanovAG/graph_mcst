@@ -1,0 +1,8 @@
+Edge between nodes "UMAYJ" and "PJN7X" is already exist
+Edge between nodes "S2U3O" and "D972Y" is already exist
+Edge between nodes "UMAYJ" and "RC0WC" is already exist
+Edge between nodes "ZLVCQ" and "L2B7E" is already exist
+RC0WC VPFTL FU95P 04IJ4 D972Y ZLVCQ L2B7E S2U3O 
+Found back edge: S2U3O->D972Y
+Found back edge: ZLVCQ->RC0WC
+Found back edge: 04IJ4->FU95P
