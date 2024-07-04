@@ -5,15 +5,16 @@ SRC_DIR=src
 OBJ_DIR=obj
 SOURCES=$(SRC_DIR)/main.cpp $(SRC_DIR)/graph.cpp
 OBJECTS=$(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
-EXECUTABLE=main.out
+EXECUTABLE=a.out
+
+all: build
 
 build: $(OBJ_DIR) $(EXECUTABLE)
 
 clean:
 	rm -rf $(OBJ_DIR)
 
-tests:
-
+tests: clean build
 
 $(OBJ_DIR):
 	mkdir -p obj

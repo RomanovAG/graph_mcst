@@ -33,6 +33,7 @@ int Graph::add_edge(const std::string &from, const std::string &to, int weight)
     }
     if (node_missing_flag)
     {
+        // there are 3 possible outcomes so 2 bits required to create a flag
         return node_missing_flag;
     }
 
@@ -58,7 +59,7 @@ int Graph::remove_node(const std::string &node)
     }
 
     this->nodes.erase(node);
-    for (auto & pair : this->nodes) 
+    for (auto & pair : this->nodes)
     {
         pair.second.erase(node);
     }
@@ -78,6 +79,7 @@ int Graph::remove_edge(const std::string &from, const std::string &to)
     }
     if (node_missing_flag)
     {
+        // same logic as in add_edge()
         return node_missing_flag;
     }
 
@@ -122,6 +124,7 @@ Graph::post_order(const std::string &root_node) const
             }
             else if (visited.at(adj_node.first) == true)
             {
+                // if open node encountered then it's back edge
                 back_edges.push_back({node, adj_node.first});
             }
         }
@@ -146,6 +149,7 @@ void Graph::print_RPO() const
     const auto &order = pair.first;
     const auto &back_edges = pair.second;
     
+    // iterate in reverse order since it's RPO
     for (auto it = order.rbegin(); it != order.rend(); it++)
     {
         std::cout << *it << " ";
@@ -160,6 +164,12 @@ void Graph::print_RPO() const
 
 std::vector<std::string> Graph::critical_path(const std::string &from, const std::string &to) const
 {
+    auto pair = this->post_order(from); // does reversed topological sort
+    if (!pair.second.empty())
+    {
+        throw std::runtime_error("Cycles detected");
+    }
+    
     std::unordered_map<std::string, int> dist;
     std::unordered_map<std::string, std::string> prev;
 
@@ -168,12 +178,6 @@ std::vector<std::string> Graph::critical_path(const std::string &from, const std
         dist.insert({node.first, -1});
     }
     dist.at(from) = 0;
-
-    auto pair = this->post_order(from);
-    if (!pair.second.empty())
-    {
-        throw std::runtime_error("Cycles detected");
-    }
 
     for (auto it = pair.first.rbegin(); it != pair.first.rend(); it++)
     {
@@ -191,10 +195,11 @@ std::vector<std::string> Graph::critical_path(const std::string &from, const std
         }
     }
 
+    // extracting path
     std::vector<std::string> path;
-    for (std::string at = to; at != from; at = prev.at(at)) 
+    for (std::string node = to; node != from; node = prev.at(node)) 
     {
-        path.push_back(at);
+        path.push_back(node);
     }
     path.push_back(from);
     std::reverse(path.begin(), path.end());
@@ -214,6 +219,10 @@ void Graph::print_critical_path(const std::string &from, const std::string &to) 
 
 void Graph::exec_cmd(const std::string &command)
 {
+    // since methods that modify graph don't write anything to the stream, 
+    // lambda functions take care of that by decoding return value
+
+    // command map <"cmd", lambda function>
     std::unordered_map<std::string, std::function<void(std::istringstream &)>>
     cmd_map = 
     {
@@ -315,7 +324,15 @@ void Graph::exec_cmd(const std::string &command)
             "PRINT_RPO", [this](std::istringstream &iss) -> void
             {
                 iss.clear();
-                this->print_RPO();
+
+                try
+                {
+                    this->print_RPO();
+                }
+                catch (std::runtime_error &e)
+                {
+                    std::cout << e.what() << std::endl;
+                }
             }
         },
         {
@@ -324,7 +341,14 @@ void Graph::exec_cmd(const std::string &command)
                 std::string from, to;
                 iss >> from >> to;
 
-                this->print_critical_path(from, to);
+                try
+                {
+                    this->print_critical_path(from, to);
+                }
+                catch (std::runtime_error &e)
+                {
+                    std::cout << e.what() << std::endl;
+                }
             }
         }
     };

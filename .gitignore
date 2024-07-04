@@ -31,3 +31,5 @@ obj/
 *.exe
 *.out
 *.app
+
+*.py

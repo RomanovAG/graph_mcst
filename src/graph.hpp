@@ -12,10 +12,12 @@ private:
     std::string root;
     std::unordered_map<std::string, std::unordered_map<std::string, int>> nodes;
 
+    // returns nodes in post order and found back edges as pair of nodes
     std::pair<std::vector<std::string>, std::vector<std::pair<std::string, std::string>>> 
     post_order(const std::string &root_node) const;
 
-    std::vector<std::string> critical_path(const std::string &from, const std::string &to) const;
+    std::vector<std::string> 
+    critical_path(const std::string &from, const std::string &to) const;
 
 public:
     Graph();

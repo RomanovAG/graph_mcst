@@ -8,6 +8,7 @@ int main()
     std::string command;
     while (std::getline(std::cin, command))
     {
+        // TODO: remove extra spaces from "end " command (should i?)
         if (command == "END")
         {
             break;
