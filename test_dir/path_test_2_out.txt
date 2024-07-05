@@ -1,2 +1,0 @@
-Start->A->C->Stop
-Start A B D C Stop 

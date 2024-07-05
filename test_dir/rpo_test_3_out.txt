@@ -1,2 +1,0 @@
-Node "A" is not exist
-Root is not set
