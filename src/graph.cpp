@@ -22,6 +22,8 @@ int Graph::add_node(const std::string &node)
 
 int Graph::add_edge(const std::string &from, const std::string &to, int weight)
 {
+    // 2 bits: left - from (node), right - to (node). bit is set if node is not exist
+    // if both bits == 1 (flag == 3) then both nodes doesn't exist
     int node_missing_flag = 0;
     if (!this->nodes.contains(from))
     {
@@ -164,7 +166,7 @@ void Graph::print_RPO() const
 
 std::vector<std::string> Graph::critical_path(const std::string &from, const std::string &to) const
 {
-    auto pair = this->post_order(from); // does reversed topological sort
+    auto pair = this->post_order(from); // returns reversed topological sorted nodes if no cycles found
     if (!pair.second.empty())
     {
         throw std::runtime_error("Cycles detected");
