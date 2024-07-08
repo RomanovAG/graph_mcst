@@ -65,6 +65,10 @@ int Graph::remove_node(const std::string &node)
     {
         pair.second.erase(node);
     }
+    if (node == this->root)
+    {
+        this->root.clear();
+    }
     return 0;
 }
 
@@ -206,7 +210,7 @@ std::vector<std::string> Graph::critical_path(const std::string &from, const std
     {
         throw std::runtime_error("Node " + to + " is not reachable from node " + from);
     }
-    
+
     // extracting path
     std::vector<std::string> path;
     for (std::string node = to; node != from; node = prev.at(node)) 
