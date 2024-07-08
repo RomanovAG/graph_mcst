@@ -166,6 +166,11 @@ void Graph::print_RPO() const
 
 std::vector<std::string> Graph::critical_path(const std::string &from, const std::string &to) const
 {
+    if (!this->nodes.contains(from) || !this->nodes.contains(to))
+    {
+        throw std::runtime_error("Wrong start or end node");
+    }
+
     auto pair = this->post_order(from); // returns reversed topological sorted nodes if no cycles found
     if (!pair.second.empty())
     {
@@ -197,6 +202,11 @@ std::vector<std::string> Graph::critical_path(const std::string &from, const std
         }
     }
 
+    if (dist.at(to) < 0)
+    {
+        throw std::runtime_error("Node " + to + " is not reachable lol from node " + from);
+    }
+    
     // extracting path
     std::vector<std::string> path;
     for (std::string node = to; node != from; node = prev.at(node)) 
