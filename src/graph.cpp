@@ -204,7 +204,7 @@ std::vector<std::string> Graph::critical_path(const std::string &from, const std
 
     if (dist.at(to) < 0)
     {
-        throw std::runtime_error("Node " + to + " is not reachable lol from node " + from);
+        throw std::runtime_error("Node " + to + " is not reachable from node " + from);
     }
     
     // extracting path
